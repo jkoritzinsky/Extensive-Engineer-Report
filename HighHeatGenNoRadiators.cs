@@ -30,6 +30,7 @@ namespace JKorTech.Extensive_Engineer_Report
             var noHighHeatParts = true;
             foreach (var part in EditorLogic.SortedShipList)
             {
+                if (part.name.StartsWith("radPanel")) return true;
                 if (part.FindModuleImplementing<ModuleActiveRadiator>() != null || part.FindModuleImplementing<ModuleDeployableRadiator>() != null) return true;
                 if (part.radiatorMax > defaultRadiationVal) noHighHeatParts = false;
             }
