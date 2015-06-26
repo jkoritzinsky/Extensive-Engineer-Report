@@ -30,7 +30,7 @@ Extensive Engineer Report is a [Kerbal Space Program](http://kerbalspaceprogram.
   * Severity: Critical
 
 ## How To Report Bugs and Request Features
-If you find a bug or have a feature request, [add an issue here](https://github.com/jkoritzinsky/Extensive-Engineer-Report/issues/new) on GitHub. This will have the fastest turnaround.
+If you find a bug or have a feature request, [add an issue here](https://github.com/jkoritzinsky/Extensive-Engineer-Report/issues/new) on GitHub. This will have the fastest turnaround.  I'll also respond here or on Reddit, but it might take a little longer.
 
 ### Custom Test Configuration Through UI
 Once KSP 1.1 on Unity 5 is released, and no earlier, I will create a configuration UI for this mod.
