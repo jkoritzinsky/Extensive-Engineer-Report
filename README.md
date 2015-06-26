@@ -28,6 +28,7 @@ Extensive Engineer Report is a [Kerbal Space Program](http://kerbalspaceprogram.
 * Has Flight Computer
   * Warns if an unmanned probe does not have a flight computer.
   * Severity: Critical
+
 ## How To Report Bugs and Request Features
 If you find a bug or have a feature request, [add an issue here](https://github.com/jkoritzinsky/Extensive-Engineer-Report/issues/new) on GitHub. This will have the fastest turnaround.
 
