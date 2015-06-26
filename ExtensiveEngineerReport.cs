@@ -17,11 +17,25 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             reportsRegistered = false;
             designConcerns = new List<IDesignConcern>();
-            designConcerns.Add(new ScienceButNoComms());
-            designConcerns.Add(new HighHeatGenNoRadiators());
-            designConcerns.Add(new LandingLegsButNoLights());
-            designConcerns.Add(new SuggestFixedPowerGenIfOnlyDeployable());
+            InitializeConcerns();
             Debug.Log("[Extensive Engineer Report] Extensive Engineer Report Initialized");
+        }
+
+        private void InitializeConcerns()
+        {
+            foreach (var assembly in AssemblyLoader.loadedAssemblies)
+            {
+                foreach (var type in assembly.assembly.GetTypes())
+                {
+                    if (object.Equals(type.BaseType, typeof(DesignConcernBase)) && !object.Equals(type.Assembly, typeof(DesignConcernBase).Assembly))
+                    {
+                        Debug.Log("[Extensive Engineer Report] Found concern: " + type.Name);
+                        var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
+                        if ((object)defaultConstructor != null) designConcerns.Add((IDesignConcern)defaultConstructor.Invoke(null));
+                        else Debug.LogWarning("[Extensive Engineer Report] Concern: " + type.Name + " does not have a default constructor");
+                    }
+                } 
+            }
         }
         void Start() { }
         void Update()
