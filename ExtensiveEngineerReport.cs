@@ -18,6 +18,9 @@ namespace JKorTech.Extensive_Engineer_Report
             reportsRegistered = false;
             designConcerns = new List<IDesignConcern>();
             designConcerns.Add(new ScienceButNoComms());
+            designConcerns.Add(new HighHeatGenNoRadiators());
+            designConcerns.Add(new LandingLegsButNoLights());
+            designConcerns.Add(new SuggestFixedPowerGenIfOnlyDeployable());
             Debug.Log("[Extensive Engineer Report] Extensive Engineer Report Initialized");
         }
         void Start() { }
