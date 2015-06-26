@@ -20,6 +20,7 @@ Extensive Engineer Report is a [Kerbal Space Program](http://kerbalspaceprogram.
   * Warns when the only power generation is deployable to prevent DOA probes because panels weren't deployed.
   * Severity: Notice
   * Suggested by: [cephalo](http://forum.kerbalspaceprogram.com/threads/126662-1-04-Extensive-Engineer-Report?p=2040769&viewfull=1#post2040769) on the forum
+
 ## Tests In The RemoteTech Concerns Plugin (v0.1)
 * Antenna Checks
   * Warns if an unmanned probe either has no antenna or only has the integrated antenna (probe cores).
