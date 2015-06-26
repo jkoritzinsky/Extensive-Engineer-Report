@@ -8,7 +8,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4D481D58-23D5-4292-B9C3-EADFD50AD376}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RemoteTechConcerns", "RemoteTechConcerns\RemoteTechConcerns.csproj", "{199D62BF-1B78-4336-845F-2FEDC40CE640}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,6 +23,10 @@ Global
 		{0E8C219B-645B-457B-8E9F-EA274D4BC88E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0E8C219B-645B-457B-8E9F-EA274D4BC88E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0E8C219B-645B-457B-8E9F-EA274D4BC88E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{199D62BF-1B78-4336-845F-2FEDC40CE640}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{199D62BF-1B78-4336-845F-2FEDC40CE640}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{199D62BF-1B78-4336-845F-2FEDC40CE640}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{199D62BF-1B78-4336-845F-2FEDC40CE640}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -21,7 +20,7 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override DesignConcernSeverity GetSeverity()
         {
-            return DesignConcernSeverity.WARNING;
+            return DesignConcernSeverity.NOTICE;
         }
 
         public override bool TestCondition()
