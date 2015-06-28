@@ -50,6 +50,7 @@
     <Compile Include="HasControlSurfaces.cs" />
     <Compile Include="LandingLegsButNoLights.cs" />
     <Compile Include="HighHeatGenNoRadiators.cs" />
+    <Compile Include="ProbeCoreHasBackupBattery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceButNoComms.cs" />
     <Compile Include="SuggestFixedPowerGenIfOnlyDeployable.cs" />

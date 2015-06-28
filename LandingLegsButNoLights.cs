@@ -37,7 +37,7 @@ namespace JKorTech.Extensive_Engineer_Report
                     hasLandingLegs = true;
                 }
             }
-            return !hasLandingLegs || (hasLandingLegs && hasLights);
+            return !hasLandingLegs || hasLights;
         }
     }
 }

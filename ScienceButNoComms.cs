@@ -27,7 +27,6 @@ namespace JKorTech.Extensive_Engineer_Report
         public override bool TestCondition()
         {
             var anyCrew = ShipConstruction.ShipManifest.HasAnyCrew();
-            Debug.Log("Has Crew:" + anyCrew);
             var parts = EditorLogic.SortedShipList;
             bool hasAnyComms = false;
             bool hasScienceModules = false;
@@ -36,8 +35,6 @@ namespace JKorTech.Extensive_Engineer_Report
                 hasAnyComms |= part.FindModulesImplementing<ModuleDataTransmitter>().Count != 0;
                 hasScienceModules |= part.FindModulesImplementing<ModuleScienceExperiment>().Count != 0;
             }
-            Debug.Log("Has Comms:" + hasAnyComms);
-            Debug.Log("Has science modules:" + hasScienceModules);
             return !hasScienceModules || anyCrew || hasAnyComms;
         }
     }

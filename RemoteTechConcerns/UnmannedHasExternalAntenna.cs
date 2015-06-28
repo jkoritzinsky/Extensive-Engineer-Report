@@ -7,7 +7,7 @@ using System.Text;
 
 namespace RemoteTechConcerns
 {
-    public class UnmannedHasExternalAntenna : DesignConcernBase
+    public class UnmannedHasExternalAntenna : DesignConcernBase, IPreFlightTest
     {
         public override string GetConcernDescription()
         {
@@ -41,6 +41,26 @@ namespace RemoteTechConcerns
                 var commandModule = part.FindModuleImplementing<ModuleCommand>();
                 return commandModule != null && (commandModule.minimumCrew == 0 || !ShipConstruction.ShipManifest.HasAnyCrew());
                 }).ToList();
+        }
+
+        public string GetAbortOption()
+        {
+            return "Cancel";
+        }
+
+        public string GetProceedOption()
+        {
+            return "Launch anyway";
+        }
+
+        public string GetWarningDescription()
+        {
+            return GetConcernDescription();
+        }
+
+        public string GetWarningTitle()
+        {
+            return GetConcernTitle();
         }
     }
 }
