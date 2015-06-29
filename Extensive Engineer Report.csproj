@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ExtensiveEngineerReport.cs" />
     <Compile Include="HasControlSurfaces.cs" />
+    <Compile Include="HasSASModuleOrPilot.cs" />
     <Compile Include="LabsHaveScientistsAboard.cs" />
     <Compile Include="LandingLegsButNoLights.cs" />
     <Compile Include="HighHeatGenNoRadiators.cs" />
