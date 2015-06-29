@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="ExtensiveEngineerReport.cs" />
     <Compile Include="HasControlSurfaces.cs" />
+    <Compile Include="LabsHaveScientistsAboard.cs" />
     <Compile Include="LandingLegsButNoLights.cs" />
     <Compile Include="HighHeatGenNoRadiators.cs" />
     <Compile Include="ProbeCoreHasBackupBattery.cs" />

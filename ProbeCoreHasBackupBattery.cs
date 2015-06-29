@@ -25,15 +25,16 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override bool TestCondition()
         {
-            var unmannedProbe = EditorLogic.SortedShipList.Any(part =>
+            var unmannedProbe = !ShipConstruction.ShipManifest.HasAnyCrew() || EditorLogic.SortedShipList.Any(part =>
             {
                 var commandModule = part.FindModuleImplementing<ModuleCommand>();
-                return commandModule != null && (commandModule.minimumCrew == 0 || !ShipConstruction.ShipManifest.HasAnyCrew());
+                return commandModule != null && commandModule.minimumCrew == 0;
             });
             var backupBattery = EditorLogic.SortedShipList.Any(part =>
             {
                 var electricCharge = part.Resources["ElectricCharge"];
-                var isBattery = electricCharge != null && electricCharge.amount > 0;
+                if (electricCharge == null) return false;
+                var isBattery = electricCharge.amount > 0;
                 var isNotCommandModule = part.FindModuleImplementing<ModuleCommand>() == null;
                 var flowDisabled = electricCharge.flowState == false;
                 return isBattery && isNotCommandModule && flowDisabled;
