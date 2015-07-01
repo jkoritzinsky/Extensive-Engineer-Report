@@ -29,5 +29,10 @@ namespace JKorTech.Extensive_Engineer_Report
             var hasScientist = ShipConstruction.ShipManifest.GetAllCrew(false).Any(crew => crew.experienceTrait.TypeName == "Scientist");
             return !hasLab || hasScientist;
         }
+
+        public override List<Part> GetAffectedParts()
+        {
+            return EditorLogic.SortedShipList.Where(part => part.FindModuleImplementing<ModuleScienceLab>() != null).ToList();
+        }
     }
 }

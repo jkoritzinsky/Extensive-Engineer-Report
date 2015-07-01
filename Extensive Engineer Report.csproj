@@ -52,6 +52,7 @@
     <Compile Include="LabsHaveScientistsAboard.cs" />
     <Compile Include="LandingLegsButNoLights.cs" />
     <Compile Include="HighHeatGenNoRadiators.cs" />
+    <Compile Include="NonResettableExperimentsHaveScientistOrLab.cs" />
     <Compile Include="ProbeCoreHasBackupBattery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScienceButNoComms.cs" />
