@@ -25,7 +25,9 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override bool TestCondition()
         {
-            var hasPilots = ShipConstruction.ShipManifest.GetAllCrew(false).Any(crew => crew.experienceTrait.TypeName == "Pilot");
+            var hasPilots = ShipConstruction.ShipManifest.GetAllCrew(false).Where(member => member.experienceTrait.TypeName == "Pilot")
+                                                                .Select(member => ShipConstruction.ShipManifest.GetPartForCrew(member))
+                                                                .Any(p => p.PartInfo.partPrefab.FindModuleImplementing<ModuleCommand>() != null);
             var hasSAS = EditorLogic.SortedShipList.Any(part => part.FindModuleImplementing<ModuleSAS>() != null);
             return hasPilots || hasSAS;
         }
