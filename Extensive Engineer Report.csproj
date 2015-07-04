@@ -55,8 +55,11 @@
     <Compile Include="NonResettableExperimentsHaveScientistOrLab.cs" />
     <Compile Include="ProbeCoreHasBackupBattery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RadialStagesStrutted.cs" />
     <Compile Include="ScienceButNoComms.cs" />
+    <Compile Include="StrutsDontGoToLowerStages.cs" />
     <Compile Include="SuggestFixedPowerGenIfOnlyDeployable.cs" />
+    <Compile Include="VabTwrAbove1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

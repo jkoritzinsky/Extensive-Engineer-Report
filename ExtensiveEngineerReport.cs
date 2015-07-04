@@ -99,22 +99,23 @@ namespace JKorTech.Extensive_Engineer_Report
                     check.RunTests();
                 }
             });
+            GameEvents.onGUIEngineersReportReady.Add(AddTests);
+            GameEvents.onGUIEngineersReportDestroy.Add(RemoveTests);
         }
-        void Update()
+
+        private void AddTests()
         {
-            if (EngineersReport.Instance != null && !reportsRegistered)
+            Debug.Log("[Extensive Engineer Report] Concerns registering");
+            foreach (var concern in designConcerns)
             {
-                Debug.Log("[Extensive Engineer Report] Concerns registering");
-                foreach (var concern in designConcerns)
-                {
-                    EngineersReport.Instance.AddTest(concern);
-                }
-                reportsRegistered = true;
-                Debug.Log("[Extensive Engineer Report] Concerns registered");
+                EngineersReport.Instance.AddTest(concern);
             }
+            reportsRegistered = true;
+            Debug.Log("[Extensive Engineer Report] Concerns registered");
+            EngineersReport.Instance.appLauncherButton.sprite.Color = XKCDColors.KSPBadassGreen;
         }
-        void FixedUpdate() { }
-        void OnDestroy()
+
+        private void RemoveTests()
         {
             if (!reportsRegistered) Debug.LogError("[Extensive Engineer Report] Never registered");
             if (reportsRegistered)
@@ -128,5 +129,9 @@ namespace JKorTech.Extensive_Engineer_Report
                 Debug.Log("[Extensive Engineer Report] Concerns unregistered");
             }
         }
+
+        void Update() { }
+        void FixedUpdate() { }
+        void OnDestroy() { }
     }
 }
