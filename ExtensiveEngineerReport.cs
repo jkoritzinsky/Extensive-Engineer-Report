@@ -112,7 +112,6 @@ namespace JKorTech.Extensive_Engineer_Report
             }
             reportsRegistered = true;
             Debug.Log("[Extensive Engineer Report] Concerns registered");
-            EngineersReport.Instance.appLauncherButton.sprite.Color = XKCDColors.KSPBadassGreen;
         }
 
         private void RemoveTests()
@@ -132,6 +131,10 @@ namespace JKorTech.Extensive_Engineer_Report
 
         void Update() { }
         void FixedUpdate() { }
-        void OnDestroy() { }
+        void OnDestroy()
+        {
+            GameEvents.onGUIEngineersReportReady.Remove(AddTests);
+            GameEvents.onGUIEngineersReportDestroy.Remove(RemoveTests);
+        }
     }
 }
