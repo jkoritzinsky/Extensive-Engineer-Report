@@ -30,7 +30,22 @@ namespace JKorTech.Extensive_Engineer_Report
             var thrust = EditorLogic.SortedShipList.Where(part => part.inverseStage == firstStage)
                                                     .SelectMany(part => part.FindModulesImplementing<ModuleEngines>())
                                                     .Sum(engine => engine.GetMaxThrust());
-            return thrust > mass;
+            var thrustByStage = EditorLogic.SortedShipList.GroupBy(part => part.inverseStage)
+                                                    .OrderByDescending(group => group.Key)
+                                                    .Select(group => group.SelectMany(part => part.FindModulesImplementing<ModuleEngines>())
+                                                                           .Select(engine => engine.GetMaxThrust()).Sum());
+            thrustByStage = thrustByStage.ToList();
+            foreach (var stageThrust in thrustByStage)
+            {
+                UnityEngine.Debug.Log("[EER] Stage thrust pre filter: " + stageThrust);
+            }
+            foreach (var stageThrust in thrustByStage.SkipWhile(stage => stage < .001))
+            {
+                UnityEngine.Debug.Log("[EER] Stage thrust post filter: " + stageThrust);
+            }
+            var firstEngineStageThrust = thrustByStage.FirstOrDefault(stageThrust => stageThrust > .001);
+            UnityEngine.Debug.Log("[EER] " + firstEngineStageThrust * 1000 + "<>" + mass);
+            return firstEngineStageThrust > mass;
         }
 
         public override EditorFacilities GetEditorFacilities()

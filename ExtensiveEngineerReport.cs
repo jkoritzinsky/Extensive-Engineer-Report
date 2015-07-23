@@ -34,7 +34,8 @@ namespace JKorTech.Extensive_Engineer_Report
 
             public string GetWarningDescription()
             {
-                var concernNames = report.designConcerns.Where(concern => !IsPassingConcern(concern)).Select(concern => concern.GetConcernTitle())
+                var concernNames = report.designConcerns.Where(concern => EngineersReport.Instance.ShouldTest(concern) && !IsPassingConcern(concern))
+                                                        .Select(concern => concern.GetConcernTitle())
                     .Aggregate(new StringBuilder().AppendLine(), (builder, str) => builder.AppendLine(str)).ToString();
                 return @"There are some concerning aspects from the supplementary Engineers' Report about your vessel.Specifically:" + concernNames
                     + "\nDo you want to check if they are important?";
@@ -74,7 +75,7 @@ namespace JKorTech.Extensive_Engineer_Report
                 if (object.Equals(assembly, typeof(TInterface).Assembly)) continue;
                 foreach (var type in assembly.assembly.GetTypes())
                 {
-                    if (type.GetInterfaces().Any(t => object.Equals(t, typeof(TInterface))) && !object.Equals(type.Assembly, typeof(TInterface).Assembly))
+                    if (!type.IsAbstract && type.GetInterfaces().Any(t => object.Equals(t, typeof(TInterface))) && !object.Equals(type.Assembly, typeof(TInterface).Assembly))
                     {
                         Debug.Log("[Extensive Engineer Report] Found item: " + type.Name);
                         var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
