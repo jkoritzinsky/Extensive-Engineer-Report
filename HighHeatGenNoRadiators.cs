@@ -34,6 +34,8 @@ namespace JKorTech.Extensive_Engineer_Report
             var activeRadiators = sectionParts.AnyHasModule<ModuleActiveRadiator>() || sectionParts.AnyHasModule<ModuleDeployableRadiator>();
             if (activeRadiators) return true;
             var highHeatParts = sectionParts.Where(part => part.radiatorMax > defaultRadiationVal);
+            var anyHighHeat = highHeatParts.Any();
+            if (!anyHighHeat) return true;
             var anyHighHeatNoRadiators = highHeatParts.Any(part => !part.children.Any(child => child.name.StartsWith("radPanel")));
             return anyHighHeatNoRadiators;
         }

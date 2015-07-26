@@ -27,7 +27,7 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             if (sectionParts.AnyHasModule<ModuleGenerator>()) return true;
             var solarPanels = sectionParts.SelectMany(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>());
-            if (solarPanels.Any(panel => !panel.sunTracking)) return true;
+            if (solarPanels.Any(panel => !panel.sunTracking) || !solarPanels.Any()) return true;
             return solarPanels.Any();
         }
 
