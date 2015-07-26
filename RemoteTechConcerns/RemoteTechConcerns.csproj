@@ -56,6 +56,12 @@
   <ItemGroup>
     <Content Include="LICENSE.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Extensive Engineer Report.csproj">
+      <Project>{0e8c219b-645b-457b-8e9f-ea274d4bc88e}</Project>
+      <Name>Extensive Engineer Report</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

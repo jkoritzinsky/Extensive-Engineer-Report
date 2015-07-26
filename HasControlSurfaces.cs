@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class HasControlSurfaces : DesignConcernBase
+    public class HasControlSurfaces : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,14 +23,14 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.CRITICAL;
         }
 
-        public override bool TestCondition()
-        {
-            return EditorLogic.SortedShipList.Any(part => part.FindModuleImplementing<ModuleControlSurface>() != null);
-        }
-
         public override EditorFacilities GetEditorFacilities()
         {
             return EditorFacilities.SPH;
+        }
+
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.AnyHasModule<ModuleControlSurface>();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class SuggestFixedPowerGenIfOnlyDeployable : DesignConcernBase
+    public class SuggestFixedPowerGenIfOnlyDeployable : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,21 +23,17 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var parts = EditorLogic.SortedShipList;
-            var hasNoDeployableGen = true;
-            foreach (var part in parts)
-            {
-                if (part.FindModuleImplementing<ModuleGenerator>()) return true;
-                var solarPanel = part.FindModuleImplementing<ModuleDeployableSolarPanel>();
-                if (solarPanel != null)
-                {
-                    if (!solarPanel.sunTracking) return true;
-                    else hasNoDeployableGen = false;
-                }
-            }
-            return hasNoDeployableGen;
+            if (sectionParts.AnyHasModule<ModuleGenerator>()) return true;
+            var solarPanels = sectionParts.SelectMany(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>());
+            if (solarPanels.Any(panel => !panel.sunTracking)) return true;
+            return solarPanels.Any();
+        }
+
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.Where(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>().Any(panel => panel.sunTracking)).ToList();
         }
     }
 }

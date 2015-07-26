@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class ProbeCoreHasBackupBattery : DesignConcernBase
+    public class ProbeCoreHasBackupBattery : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,23 +23,19 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var unmannedProbe = !ShipConstruction.ShipManifest.HasAnyCrew() || EditorLogic.SortedShipList.Any(part =>
-            {
-                var commandModule = part.FindModuleImplementing<ModuleCommand>();
-                return commandModule != null && commandModule.minimumCrew == 0;
-            });
-            var backupBattery = EditorLogic.SortedShipList.Any(part =>
+            var manned = CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
+            var backupBattery = sectionParts.Any(part =>
             {
                 var electricCharge = part.Resources["ElectricCharge"];
                 if (electricCharge == null) return false;
                 var isBattery = electricCharge.amount > 0;
-                var isNotCommandModule = part.FindModuleImplementing<ModuleCommand>() == null;
+                var isNotCommandModule = part.HasModule<ModuleCommand>();
                 var flowDisabled = electricCharge.flowState == false;
                 return isBattery && isNotCommandModule && flowDisabled;
             });
-            return !unmannedProbe || backupBattery;
+            return manned || backupBattery;
         }
     }
 }

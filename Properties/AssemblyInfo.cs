@@ -22,7 +22,7 @@ using System.Runtime.InteropServices;
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("92097b10-6428-4bad-a0d8-503f4b4a1851")]
 
-[assembly: AssemblyVersion("0.3.0.0")]
-[assembly: AssemblyFileVersion("0.3.0.0")]
+[assembly: AssemblyVersion("0.4.0.0")]
+[assembly: AssemblyFileVersion("0.4.0.0")]
 
-[assembly:KSPAssembly("ExtensiveEngineerReport", 0, 3)]
+[assembly:KSPAssembly("ExtensiveEngineerReport", 0, 4)]

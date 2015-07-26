@@ -1,4 +1,5 @@
-﻿using PreFlightTests;
+﻿using JKorTech.Extensive_Engineer_Report;
+using PreFlightTests;
 using RemoteTech;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace RemoteTechConcerns
 {
-    public class UnmannedHasFlightComputer : DesignConcernBase
+    public class UnmannedHasFlightComputer : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -24,15 +25,9 @@ namespace RemoteTechConcerns
             return DesignConcernSeverity.CRITICAL;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var isManned = ShipConstruction.ShipManifest.HasAnyCrew();
-            if (isManned) return true;
-            foreach (var part in EditorLogic.SortedShipList)
-            {
-                if (part.FindModuleImplementing<ISignalProcessor>() != null) return true;
-            }
-            return false;
+            return CrewInSection(sectionParts).Any() || sectionParts.AnyHasModule<ISignalProcessor>();
         }
     }
 }

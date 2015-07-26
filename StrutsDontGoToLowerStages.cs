@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class StrutsDontGoToLowerStages : DesignConcernBase
+    public class StrutsDontGoToLowerStages : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,14 +23,14 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
             return GetAffectedParts().Count == 0;
         }
 
-        public override List<Part> GetAffectedParts()
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            var struts = EditorLogic.SortedShipList.Where(part => part.FindModuleImplementing<CompoundParts.CModuleStrut>() != null)
+            var struts = sectionParts.Where(part => part.FindModuleImplementing<CompoundParts.CModuleStrut>() != null)
                         .Cast<CompoundPart>().Where(part => part.attachState == CompoundPart.AttachState.Attached).ToList();
             return struts.Where(strut => strut.parent.inverseStage < strut.target.inverseStage).Cast<Part>().ToList();
         }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class ScienceButNoComms : DesignConcernBase
+    public class ScienceButNoComms : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -24,18 +24,17 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var anyCrew = ShipConstruction.ShipManifest.HasAnyCrew();
-            var parts = EditorLogic.SortedShipList;
-            bool hasAnyComms = false;
-            bool hasScienceModules = false;
-            foreach (var part in parts)
-            {
-                hasAnyComms |= part.FindModulesImplementing<ModuleDataTransmitter>().Count != 0;
-                hasScienceModules |= part.FindModulesImplementing<ModuleScienceExperiment>().Count != 0;
-            }
+            var anyCrew = CrewInSection(sectionParts).Any();
+            var hasAnyComms = sectionParts.AnyHasModule<ModuleDataTransmitter>();
+            var hasScienceModules = sectionParts.AnyHasModule<ModuleScienceExperiment>();
             return !hasScienceModules || anyCrew || hasAnyComms;
+        }
+
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.Where(part => part.HasModule<ModuleScienceExperiment>()).ToList();
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class LandingLegsButNoLights : DesignConcernBase
+    public class LandingLegsButNoLights : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,20 +23,11 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var parts = EditorLogic.SortedShipList;
-            bool hasLights = false;
-            bool hasLandingLegs = false;
-            foreach (var part in parts)
-            {
-                if (part.FindModuleImplementing<ModuleLight>() != null) hasLights = true;
-                else if (part.FindModuleImplementing<ModuleLandingLeg>() != null || part.FindModuleImplementing<ModuleLandingGear>() != null
-                         || part.FindModuleImplementing<ModuleLandingGearFixed>() != null)
-                {
-                    hasLandingLegs = true;
-                }
-            }
+            var hasLights = sectionParts.AnyHasModule<ModuleLight>();
+            var hasLandingLegs = sectionParts.AnyHasModule<ModuleLandingLeg>() || sectionParts.AnyHasModule<ModuleLandingGear>()
+                                 || sectionParts.AnyHasModule<ModuleLandingGearFixed>();
             return !hasLandingLegs || hasLights;
         }
     }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class NonResettableExperimentsHaveScientistOrLab : DesignConcernBase
+    public class NonResettableExperimentsHaveScientistOrLab : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,18 +23,17 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var hasNonResettableExperiments = GetAffectedParts().Count != 0;
-            var lab = EditorLogic.SortedShipList.FirstOrDefault(part => part.FindModuleImplementing<ModuleScienceLab>() != null);
-            var hasLab = lab != null ? lab.protoModuleCrew.Count > 0 : false;
-            var hasScientist = ShipConstruction.ShipManifest.GetAllCrew(false).Any(crew => crew.experienceTrait.TypeName == "Scientist");
-            return !hasNonResettableExperiments || hasLab || hasScientist;
+            var hasNonResettableExperiments = GetAffectedParts(sectionParts).Count != 0;
+            var hasCrewedLab = CrewInSection(sectionParts).Values.AnyHasModule<ModuleScienceLab>();
+            var hasScientist = CrewInSection(sectionParts).Any(pair => pair.Key.experienceTrait.TypeName == "Scientist");
+            return !hasNonResettableExperiments || hasCrewedLab || hasScientist;
         }
 
-        public override List<Part> GetAffectedParts()
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            return EditorLogic.SortedShipList.Where(part => part.FindModulesImplementing<ModuleScienceExperiment>().Any(exp => !exp.rerunnable)).ToList();
+            return sectionParts.Where(part => part.FindModulesImplementing<ModuleScienceExperiment>().Any(exp => !exp.rerunnable)).ToList();
         }
     }
 }

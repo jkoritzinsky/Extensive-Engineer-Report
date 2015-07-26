@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class HasSASModuleOrPilot : DesignConcernBase
+    public class HasSASModuleOrPilot : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,13 +23,12 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
-        public override bool TestCondition()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var hasPilots = ShipConstruction.ShipManifest.GetAllCrew(false).Where(member => member.experienceTrait.TypeName == "Pilot")
-                                                                .Select(member => ShipConstruction.ShipManifest.GetPartForCrew(member))
-                                                                .Any(p => p.PartInfo.partPrefab.FindModuleImplementing<ModuleCommand>() != null);
-            var hasSAS = EditorLogic.SortedShipList.Any(part => part.FindModuleImplementing<ModuleSAS>() != null);
-            return hasPilots || hasSAS;
+            var hasPilots = CrewInSection(sectionParts).Any(pair => pair.Key.experienceTrait.TypeName == "Pilot"
+                                                                        && pair.Value.HasModule<ModuleCommand>());
+            var hasSas = sectionParts.AnyHasModule<ModuleSAS>();
+            return hasPilots || hasSas;
         }
     }
 }

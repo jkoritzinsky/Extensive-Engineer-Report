@@ -34,7 +34,8 @@ namespace JKorTech.Extensive_Engineer_Report
 
         private static bool IsARadialDecoupler(Part part)
         {
-            return part.name == "structuralPylon" || part.FindModuleImplementing<ModuleAnchoredDecoupler>();
+            return part.HasModule<ModuleAnchoredDecoupler>() ||
+                (part.HasModule<ModuleDecouple>() ? part.FindModuleImplementing<ModuleDecouple>().explosiveNodeID == "srf" : false);
         }
 
         private bool CheckForStrutsRoot(Part decoupler, IEnumerable<CompoundPart> struts)

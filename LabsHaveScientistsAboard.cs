@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class LabsHaveScientistsAboard : DesignConcernBase
+    public class LabsHaveScientistsAboard : SectionDesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -23,16 +23,16 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition()
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            var hasLab = EditorLogic.SortedShipList.Any(part => part.FindModuleImplementing<ModuleScienceLab>() != null);
-            var hasScientist = ShipConstruction.ShipManifest.GetAllCrew(false).Any(crew => crew.experienceTrait.TypeName == "Scientist");
-            return !hasLab || hasScientist;
+            return sectionParts.Where(part => part.HasModule<ModuleScienceConverter>() && part.HasModule<ModuleScienceLab>()).ToList();
         }
 
-        public override List<Part> GetAffectedParts()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return EditorLogic.SortedShipList.Where(part => part.FindModuleImplementing<ModuleScienceLab>() != null).ToList();
+            var hasLab = sectionParts.AnyHasModule<ModuleScienceConverter>() && sectionParts.AnyHasModule<ModuleScienceLab>();
+            var hasScientist = CrewInSection(sectionParts).Keys.Any(crew => crew.experienceTrait.TypeName == "Scientist");
+            return !hasLab || hasScientist;
         }
     }
 }

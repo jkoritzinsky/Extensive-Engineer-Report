@@ -6,7 +6,7 @@ using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class HighHeatGenNoRadiators : DesignConcernBase
+    public class HighHeatGenNoRadiators : SectionDesignConcernBase
     {
         private const double defaultRadiationVal = .25;
         public override string GetConcernDescription()
@@ -24,21 +24,18 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition()
+        public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            var noHighHeatParts = true;
-            foreach (var part in EditorLogic.SortedShipList)
-            {
-                if (part.name.StartsWith("radPanel")) return true;
-                if (part.FindModuleImplementing<ModuleActiveRadiator>() != null || part.FindModuleImplementing<ModuleDeployableRadiator>() != null) return true;
-                if (part.radiatorMax > defaultRadiationVal) noHighHeatParts = false;
-            }
-            return noHighHeatParts;
+            return sectionParts.Where(part => part.radiatorMax > defaultRadiationVal).ToList();
         }
 
-        public override List<Part> GetAffectedParts()
+        public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return EditorLogic.SortedShipList.Where(part => part.radiatorMax > defaultRadiationVal).ToList();
+            var activeRadiators = sectionParts.AnyHasModule<ModuleActiveRadiator>() || sectionParts.AnyHasModule<ModuleDeployableRadiator>();
+            if (activeRadiators) return true;
+            var highHeatParts = sectionParts.Where(part => part.radiatorMax > defaultRadiationVal);
+            var anyHighHeatNoRadiators = highHeatParts.Any(part => !part.children.Any(child => child.name.StartsWith("radPanel")));
+            return anyHighHeatNoRadiators;
         }
     }
 }
