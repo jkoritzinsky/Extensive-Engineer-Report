@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEngine;
 
@@ -87,21 +88,24 @@ namespace JKorTech.Extensive_Engineer_Report
             return instances;
         }
 
+        private Action savedLaunchScript = () => { };
+
         void Start() 
         {
-            EditorLogic.fetch.launchBtn.methodToInvoke = null;
-            EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke = null;
-            EditorLogic.fetch.launchBtn.SetInputDelegate((ref POINTER_INFO ptr) =>
-            {
-                if (ptr.evt == POINTER_INFO.INPUT_EVENT.TAP)
-                {
-                    PreFlightCheck check = new PreFlightCheck(EditorLogic.fetch.launchVessel, () => { });
-                    preFlightTests.ForEach(test => check.AddTest(test));
-                    check.RunTests();
-                }
-            });
+            MethodInfo previousMethod = EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke.GetType().GetMethod(EditorLogic.fetch.launchBtn.methodToInvoke, Type.EmptyTypes);
+            savedLaunchScript = () => { previousMethod.Invoke(EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke, null); };
+            EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke = this;
+            EditorLogic.fetch.launchBtn.methodToInvoke = "RunPreFlightChecks";
             GameEvents.onGUIEngineersReportReady.Add(AddTests);
             GameEvents.onGUIEngineersReportDestroy.Add(RemoveTests);
+        }
+
+
+        public void RunPreFlightChecks()
+        {
+            var check = new PreFlightCheck(() => { savedLaunchScript(); }, () => { });
+            preFlightTests.ForEach(test => check.AddTest(test));
+            check.RunTests();
         }
 
         private void AddTests()
