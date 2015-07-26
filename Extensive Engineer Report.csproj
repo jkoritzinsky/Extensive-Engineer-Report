@@ -61,6 +61,7 @@
     <Compile Include="SectionDesignConcernBase.cs" />
     <Compile Include="StrutsDontGoToLowerStages.cs" />
     <Compile Include="SuggestFixedPowerGenIfOnlyDeployable.cs" />
+    <Compile Include="UnmannedHasKOS.cs" />
     <Compile Include="VabTwrAbove1.cs" />
   </ItemGroup>
   <ItemGroup>
