@@ -50,6 +50,7 @@ A bug in the "Docking Port Facing" test in stock breaks the Engineer's Report te
   * Warns if TWR of first stage at max thrust is < 1 in VAB
   * Severity: Notice
   * Suggested by: MooseCannon
+
 ## Tests In The RemoteTech Concerns Plugin (v0.3)
 * Antenna Checks
   * Warns if an unmanned probe either has no antenna or only has the integrated antenna (probe cores).
@@ -58,6 +59,7 @@ A bug in the "Docking Port Facing" test in stock breaks the Engineer's Report te
 * Has Flight Computer
   * Warns if an unmanned probe does not have a flight computer.
   * Severity: Critical
+
 ## Tests In The BDArmory Concerns Plugin (v0.1)
 * Weapons and no weapon manager
   * Severity: Notice
@@ -68,6 +70,7 @@ A bug in the "Docking Port Facing" test in stock breaks the Engineer's Report te
 * Weapon manager but no flares
   * Severity: Notice
   * Suggested by: MooseCannon
+
 ## Unassociated Mod-Related Concerns
 * Unmanned probe has kOS
   * Warns if an unmanned probe lacks a kOS processor (Only if kOS is installed)
