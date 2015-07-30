@@ -92,10 +92,26 @@ namespace JKorTech.Extensive_Engineer_Report
 
         void Start() 
         {
-            MethodInfo previousMethod = EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke.GetType().GetMethod(EditorLogic.fetch.launchBtn.methodToInvoke, Type.EmptyTypes);
-            savedLaunchScript = () => { previousMethod.Invoke(EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke, null); };
-            EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke = this;
-            EditorLogic.fetch.launchBtn.methodToInvoke = "RunPreFlightChecks";
+            if (EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke == null || EditorLogic.fetch.launchBtn.methodToInvoke == null)
+            {
+                savedLaunchScript = EditorLogic.fetch.launchVessel;
+                EditorLogic.fetch.launchBtn.AddInputDelegate((ref POINTER_INFO ptr) =>
+                {
+                    if(ptr.evt == POINTER_INFO.INPUT_EVENT.TAP)
+                    {
+                        savedLaunchScript();
+                    }
+                });
+            }
+            else
+            {
+                var script = EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke;
+                var method = EditorLogic.fetch.launchBtn.methodToInvoke;
+                MethodInfo previousMethod = script.GetType().GetMethod(method, Type.EmptyTypes);
+                savedLaunchScript = () => { previousMethod.Invoke(script, null); };
+                EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke = this;
+                EditorLogic.fetch.launchBtn.methodToInvoke = "RunPreFlightChecks";
+            }
             GameEvents.onGUIEngineersReportReady.Add(AddTests);
             GameEvents.onGUIEngineersReportDestroy.Add(RemoveTests);
         }
