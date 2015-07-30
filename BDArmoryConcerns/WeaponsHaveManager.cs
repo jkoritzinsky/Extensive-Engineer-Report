@@ -16,7 +16,7 @@ namespace BDArmoryConcerns
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return !sectionParts.HasWeapons() || sectionParts.AnyHasModule<MissileFire>();
+            return !sectionParts.HasWeapons() || sectionParts.AnyHasModule("MissileFire");
         }
 
         public override string GetConcernDescription()

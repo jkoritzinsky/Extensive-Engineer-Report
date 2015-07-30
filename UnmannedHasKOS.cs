@@ -12,7 +12,7 @@ namespace JKorTech.Extensive_Engineer_Report
             if (!AssemblyLoader.loadedAssemblies.Any(assembly => assembly.assembly.GetName().Name == "kOS"))
                 return true;
             var manned = CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
-            return !manned || sectionParts.Any(part => part.Modules["kOSProcessor"]);
+            return !manned || sectionParts.Any(part => part.Modules.Contains("kOSProcessor"));
         }
 
         public override string GetConcernDescription()

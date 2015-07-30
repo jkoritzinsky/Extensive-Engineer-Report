@@ -16,8 +16,8 @@ namespace BDArmoryConcerns
 
         public static bool IsWeapon(this Part part)
         {
-            return part.HasModule<MissileLauncher>() || part.HasModule<BahaTurret.BahaTurret>()
-                                || part.HasModule<ClusterBomb>() || part.HasModule<BDMMLauncher>();
+            return part.HasModule("MissileLauncher") || part.HasModule("BahaTurret")
+                                || part.HasModule("ClusterBomb") || part.HasModule("BDMMLauncher");
         }
     }
 }
