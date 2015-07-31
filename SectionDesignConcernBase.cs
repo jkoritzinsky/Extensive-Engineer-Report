@@ -30,8 +30,8 @@ namespace JKorTech.Extensive_Engineer_Report
         protected static IDictionary<ProtoCrewMember, Part> CrewInSection(IEnumerable<Part> sectionParts)
         {
             return ShipConstruction.ShipManifest.GetAllCrew(false)
-                .Select(crew => new KeyValuePair<ProtoCrewMember, Part>(crew, ShipConstruction.ShipManifest.GetPartForCrew(crew).PartInfo.partPrefab))
-                .Where(pair => true /*TODO: Figure out how to check if crew is in section*/).ToDictionary(pair => pair.Key, pair => pair.Value);
+                .Select(crew => new KeyValuePair<ProtoCrewMember, Part>(crew, ShipConstruction.FindPartWithCraftID(ShipConstruction.ShipManifest.GetPartForCrew(crew).PartID)))
+                .Where(pair => sectionParts.Contains(pair.Value)).ToDictionary(pair => pair.Key, pair => pair.Value);
         }
     }
 }
