@@ -9,15 +9,9 @@ namespace BDArmoryConcerns
 {
     internal static class BDUtils
     {
-        public static bool HasWeapons(this IEnumerable<Part> sectionParts)
-        {
-            return sectionParts.Any(part => part.IsWeapon());
-        }
+        public static bool HasWeapons(this IEnumerable<Part> sectionParts) => sectionParts.Any(part => part.IsWeapon());
 
-        public static bool IsWeapon(this Part part)
-        {
-            return part.HasModule("MissileLauncher") || part.HasModule("BahaTurret")
-                                || part.HasModule("ClusterBomb") || part.HasModule("BDMMLauncher");
-        }
+        public static bool IsWeapon(this Part part) => part.HasModule(nameof(MissileLauncher)) || part.HasModule(nameof(BahaTurret))
+                                || part.HasModule(nameof(ClusterBomb)) || part.HasModule(nameof(BDMMLauncher));
     }
 }

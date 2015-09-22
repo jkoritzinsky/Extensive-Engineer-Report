@@ -9,10 +9,8 @@ namespace BDArmoryConcerns
 {
     public class AutoPilotHasWeaponManager : SectionDesignConcernBase
     {
-        public override bool TestCondition(IEnumerable<Part> sectionParts)
-        {
-            return !sectionParts.AnyHasModule("BDModulePilotAI") || sectionParts.AnyHasModule("MissileFire");
-        }
+        public override bool TestCondition(IEnumerable<Part> sectionParts) =>
+            !sectionParts.AnyHasModule(nameof(BDModulePilotAI)) || sectionParts.AnyHasModule(nameof(MissileFire));
 
         public override string GetConcernDescription()
         {

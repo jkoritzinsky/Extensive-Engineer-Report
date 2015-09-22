@@ -47,15 +47,10 @@ namespace JKorTech.Extensive_Engineer_Report
                 return "Concerning Engineers' Report";
             }
 
-            private bool IsPassingConcern(IDesignConcern concern)
-            {
-                return concern.GetSeverity() == DesignConcernSeverity.NOTICE || concern.Test() == true || concern is IPreFlightTest;
-            }
+            private static bool IsPassingConcern(IDesignConcern concern) =>
+                concern.GetSeverity() == DesignConcernSeverity.NOTICE || concern.Test() || concern is IPreFlightTest;
 
-            public bool Test()
-            {
-                return report.designConcerns.TrueForAll(IsPassingConcern);
-            }
+            public bool Test() => report.designConcerns.Any(concern => EngineersReport.Instance.ShouldTest(concern) && !IsPassingConcern(concern));
         }
 
         void Awake()
@@ -110,7 +105,7 @@ namespace JKorTech.Extensive_Engineer_Report
                 MethodInfo previousMethod = script.GetType().GetMethod(method, Type.EmptyTypes);
                 savedLaunchScript = () => { previousMethod.Invoke(script, null); };
                 EditorLogic.fetch.launchBtn.scriptWithMethodToInvoke = this;
-                EditorLogic.fetch.launchBtn.methodToInvoke = "RunPreFlightChecks";
+                EditorLogic.fetch.launchBtn.methodToInvoke = nameof(RunPreFlightChecks);
             }
             GameEvents.onGUIEngineersReportReady.Add(AddTests);
             GameEvents.onGUIEngineersReportDestroy.Add(RemoveTests);
