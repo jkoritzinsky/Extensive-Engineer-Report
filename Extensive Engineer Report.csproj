@@ -71,7 +71,7 @@
     <Compile Include="TagModules\TagWeapons.cs" />
     <Compile Include="TagModules\TagWeaponsManager.cs" />
     <Compile Include="UnmannedHasExternalAntenna.cs" />
-    <Compile Include="UnmannedHasKOS.cs" />
+    <Compile Include="UnmannedHasAdvancedFlightComputer.cs" />
     <Compile Include="VabTwrAbove1.cs" />
     <Compile Include="WeaponManagerHasFlares.cs" />
     <Compile Include="WeaponsHaveManager.cs" />
@@ -80,6 +80,9 @@
     <None Include="ExtensiveEngineerReport.cfg" />
     <None Include="README.md" />
     <None Include="TagModules\TagModules.cfg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="StockSections\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

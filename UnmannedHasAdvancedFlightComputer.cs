@@ -3,24 +3,24 @@ using System.Linq;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class UnmannedHasKOS : SectionDesignConcernBase
+    public class UnmannedHasAdvancedFlightComputer : SectionDesignConcernBase
     {
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            if (!AssemblyLoader.loadedAssemblies.Any(assembly => assembly.assembly.GetName().Name == "kOS"))
-                return true;
             var manned = CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
-            return !manned || sectionParts.Any(part => part.Modules.Contains("kOSProcessor"));
+            return !manned || sectionParts.AnyHasModule<TagModules.TagAdvancedFlightComputer>();
         }
+
+        protected internal override string Category => "AdvancedFlightComputer";
 
         public override string GetConcernDescription()
         {
-            return "Your unmanned probe is lacking a kOS processor.";
+            return "Your unmanned probe is lacking an advanced flight computer (like MechJeb or kOS).";
         }
 
         public override string GetConcernTitle()
         {
-            return "Unmanned Probe and no kOS Processor";
+            return "Unmanned Probe and no Advanced Flight Computer ";
         }
 
         public override PreFlightTests.DesignConcernSeverity GetSeverity()
