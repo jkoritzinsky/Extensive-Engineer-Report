@@ -46,6 +46,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoPilotHasWeaponManager.cs" />
+    <Compile Include="DesignConcernBase.cs" />
     <Compile Include="ExtensiveEngineerReport.cs" />
     <Compile Include="HasControlSurfaces.cs" />
     <Compile Include="HasSASModuleOrPilot.cs" />
@@ -61,11 +63,23 @@
     <Compile Include="SectionDesignConcernBase.cs" />
     <Compile Include="StrutsDontGoToLowerStages.cs" />
     <Compile Include="SuggestFixedPowerGenIfOnlyDeployable.cs" />
+    <Compile Include="TagModules\TagAdvancedFlightComputer.cs" />
+    <Compile Include="TagModules\TagAntenna.cs" />
+    <Compile Include="TagModules\TagAutopilot.cs" />
+    <Compile Include="TagModules\TagFlares.cs" />
+    <Compile Include="TagModules\TagParachute.cs" />
+    <Compile Include="TagModules\TagWeapons.cs" />
+    <Compile Include="TagModules\TagWeaponsManager.cs" />
+    <Compile Include="UnmannedHasExternalAntenna.cs" />
     <Compile Include="UnmannedHasKOS.cs" />
     <Compile Include="VabTwrAbove1.cs" />
+    <Compile Include="WeaponManagerHasFlares.cs" />
+    <Compile Include="WeaponsHaveManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ExtensiveEngineerReport.cfg" />
     <None Include="README.md" />
+    <None Include="TagModules\TagModules.cfg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

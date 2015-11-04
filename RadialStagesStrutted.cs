@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -22,6 +21,8 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             return DesignConcernSeverity.NOTICE;
         }
+
+        protected internal override string Category => "StockDrag";
 
         public override bool TestCondition()
         {

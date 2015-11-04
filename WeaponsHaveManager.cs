@@ -1,23 +1,22 @@
-﻿using JKorTech.Extensive_Engineer_Report;
-using System;
+﻿using JKorTech.Extensive_Engineer_Report.TagModules;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using BahaTurret;
 
-namespace BDArmoryConcerns
+namespace JKorTech.Extensive_Engineer_Report
 {
     public class WeaponsHaveManager : SectionDesignConcernBase
     {
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            return sectionParts.Where(part => part.IsWeapon()).ToList();
+            return sectionParts.Where(part => part.HasModule<TagWeapons>()).ToList();
         }
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return !sectionParts.HasWeapons() || sectionParts.AnyHasModule(nameof(MissileFire));
+            return !sectionParts.AnyHasModule<TagWeapons>() || sectionParts.AnyHasModule<TagWeaponsManager>();
         }
+
+        protected internal override string Category => "Weaponry";
 
         public override string GetConcernDescription()
         {

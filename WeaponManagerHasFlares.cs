@@ -1,18 +1,16 @@
-﻿using BahaTurret;
-using JKorTech.Extensive_Engineer_Report;
-using System;
+﻿using JKorTech.Extensive_Engineer_Report.TagModules;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BDArmoryConcerns
+namespace JKorTech.Extensive_Engineer_Report
 {
     public class WeaponManagerHasFlares : SectionDesignConcernBase
     {
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return !sectionParts.AnyHasModule(nameof(MissileFire)) || sectionParts.AnyHasModule(nameof(CMDropper));
+            return !sectionParts.AnyHasModule<TagWeaponsManager>() || sectionParts.AnyHasModule<TagFlares>();
         }
+
+        protected internal override string Category => "Weaponry";
 
         public override string GetConcernDescription()
         {

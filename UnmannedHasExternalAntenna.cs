@@ -1,12 +1,9 @@
-﻿using JKorTech.Extensive_Engineer_Report;
+﻿using JKorTech.Extensive_Engineer_Report.TagModules;
 using PreFlightTests;
-using RemoteTech.Modules;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace RemoteTechConcerns
+namespace JKorTech.Extensive_Engineer_Report
 {
     public class UnmannedHasExternalAntenna : SectionDesignConcernBase, IPreFlightTest
     {
@@ -27,8 +24,10 @@ namespace RemoteTechConcerns
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return CrewInSection(sectionParts).Any() || sectionParts.AnyHasModule<ModuleRTAntenna>();
+            return CrewInSection(sectionParts).Any() || sectionParts.AnyHasModule<TagAntenna>();
         }
+
+        protected internal override string Category => "Antenna";
 
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {

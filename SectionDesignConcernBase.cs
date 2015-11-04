@@ -1,8 +1,5 @@
-﻿using PreFlightTests;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -22,10 +19,7 @@ namespace JKorTech.Extensive_Engineer_Report
 
         private static List<Part> emptyPartList = new List<Part>();
 
-        public virtual List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
-        {
-            return emptyPartList;
-        }
+        public virtual List<Part> GetAffectedParts(IEnumerable<Part> sectionParts) => emptyPartList;
 
         protected static IDictionary<ProtoCrewMember, Part> CrewInSection(IEnumerable<Part> sectionParts)
         {

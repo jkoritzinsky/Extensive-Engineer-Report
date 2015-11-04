@@ -1,16 +1,14 @@
-﻿using BahaTurret;
-using JKorTech.Extensive_Engineer_Report;
-using System;
+﻿using JKorTech.Extensive_Engineer_Report.TagModules;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace BDArmoryConcerns
+namespace JKorTech.Extensive_Engineer_Report
 {
     public class AutoPilotHasWeaponManager : SectionDesignConcernBase
     {
         public override bool TestCondition(IEnumerable<Part> sectionParts) =>
-            !sectionParts.AnyHasModule(nameof(BDModulePilotAI)) || sectionParts.AnyHasModule(nameof(MissileFire));
+            !sectionParts.AnyHasModule<TagAutopilot>() || sectionParts.AnyHasModule<TagWeaponsManager>();
+
+        protected internal override string Category => "Weaponry";
 
         public override string GetConcernDescription()
         {
