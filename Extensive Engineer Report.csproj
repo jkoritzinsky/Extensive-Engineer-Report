@@ -52,6 +52,10 @@
     <Compile Include="HasControlSurfaces.cs" />
     <Compile Include="HasSASModuleOrPilot.cs" />
     <Compile Include="KSPExtensions.cs" />
+    <Compile Include="KSPPluginFramework\ExtensionsUnity.cs" />
+    <Compile Include="KSPPluginFramework\MonoBehaviourExtended.cs" />
+    <Compile Include="KSPPluginFramework\MonoBehaviourWindow.cs" />
+    <Compile Include="KSPPluginFramework\SkinsLibrary.cs" />
     <Compile Include="LabsHaveScientistsAboard.cs" />
     <Compile Include="LandingLegsButNoLights.cs" />
     <Compile Include="HighHeatGenNoRadiators.cs" />
