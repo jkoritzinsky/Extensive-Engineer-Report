@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>JKorTech.Extensive_Engineer_Report</RootNamespace>
-    <AssemblyName>Extensive Engineer Report</AssemblyName>
+    <AssemblyName>ExtensiveEngineerReport</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,7 +32,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\KSP\Base\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\KSP\KSP 1.0.5 EER\Kerbal Space Program\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="ShipSections">
+      <HintPath>..\ShipSections\ShipSections\bin\Release\ShipSections\ShipSections.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -40,19 +45,24 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\KSP\Base\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\KSP\KSP 1.0.5 EER\Kerbal Space Program\KSP_Data\Managed\UnityEngine.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AutoPilotHasWeaponManager.cs" />
+    <Compile Include="ConcernData.cs" />
+    <Compile Include="ConcernLoader.cs" />
+    <Compile Include="ConcernRunner.cs" />
+    <Compile Include="ConcernUtils.cs" />
     <Compile Include="DesignConcernBase.cs" />
-    <Compile Include="ExtensiveEngineerReport.cs" />
+    <Compile Include="EERWindow.cs" />
+    <Compile Include="FlowControlEventHack.cs" />
+    <Compile Include="GuiLayout.cs" />
     <Compile Include="HasControlSurfaces.cs" />
     <Compile Include="HasSASModuleOrPilot.cs" />
     <Compile Include="KSPExtensions.cs" />
-    <Compile Include="KSPPluginFramework\ExtensionsUnity.cs" />
     <Compile Include="KSPPluginFramework\MonoBehaviourExtended.cs" />
     <Compile Include="KSPPluginFramework\MonoBehaviourWindow.cs" />
     <Compile Include="KSPPluginFramework\SkinsLibrary.cs" />
@@ -74,6 +84,7 @@
     <Compile Include="TagModules\TagParachute.cs" />
     <Compile Include="TagModules\TagWeapons.cs" />
     <Compile Include="TagModules\TagWeaponsManager.cs" />
+    <Compile Include="TypeExtensions.cs" />
     <Compile Include="UnmannedHasExternalAntenna.cs" />
     <Compile Include="UnmannedHasAdvancedFlightComputer.cs" />
     <Compile Include="VabTwrAbove1.cs" />
@@ -81,12 +92,24 @@
     <Compile Include="WeaponsHaveManager.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ExtensiveEngineerReport.cfg" />
+    <None Include="ExtensiveEngineerReport.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="README.md" />
-    <None Include="TagModules\TagModules.cfg" />
+    <None Include="TagModules\TagModules.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="StockSections\" />
+    <Folder Include="StockConcerns\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestFail.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestPass.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

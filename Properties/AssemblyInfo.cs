@@ -25,3 +25,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyFileVersion("0.4.0.0")]
 
 [assembly: KSPAssembly("ExtensiveEngineerReport", 0, 4)]
+[assembly: KSPAssemblyDependency("ShipSections", 1, 0)]

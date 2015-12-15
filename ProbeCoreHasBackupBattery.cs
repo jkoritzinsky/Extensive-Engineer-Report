@@ -29,8 +29,8 @@ namespace JKorTech.Extensive_Engineer_Report
                 var electricCharge = part.Resources["ElectricCharge"];
                 if (electricCharge == null) return false;
                 var isBattery = electricCharge.amount > 0;
-                var isNotCommandModule = part.HasModule<ModuleCommand>();
-                var flowDisabled = electricCharge.flowState == false;
+                var isNotCommandModule = !part.HasModule<ModuleCommand>();
+                var flowDisabled = !electricCharge.flowState;
                 return isBattery && isNotCommandModule && flowDisabled;
             });
             return manned || backupBattery;
