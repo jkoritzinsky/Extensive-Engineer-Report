@@ -27,13 +27,13 @@ namespace JKorTech.Extensive_Engineer_Report
             return sectionParts.Where(part => part.radiatorMax > defaultRadiationVal).ToList();
         }
 
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts) => GetAffectedParts(sectionParts).Any();
+
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
             var activeRadiators = sectionParts.AnyHasModule<ModuleActiveRadiator>() || sectionParts.AnyHasModule<ModuleDeployableRadiator>();
             if (activeRadiators) return true;
             var highHeatParts = sectionParts.Where(part => part.radiatorMax > defaultRadiationVal);
-            var anyHighHeat = highHeatParts.Any();
-            if (!anyHighHeat) return true;
             var anyHighHeatNoRadiators = highHeatParts.Any(part => !part.children.Any(child => child.name.StartsWith("radPanel")));
             return anyHighHeatNoRadiators;
         }

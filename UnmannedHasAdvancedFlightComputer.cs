@@ -7,8 +7,12 @@ namespace JKorTech.Extensive_Engineer_Report
     {
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var manned = CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
-            return !manned || sectionParts.AnyHasModule<TagModules.TagAdvancedFlightComputer>();
+            return sectionParts.AnyHasModule<TagModules.TagAdvancedFlightComputer>();
+        }
+
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.IsProbeControlled();
         }
 
         protected internal override string Category => "AdvancedFlightComputer";

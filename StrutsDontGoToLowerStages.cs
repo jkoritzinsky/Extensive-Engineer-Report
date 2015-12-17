@@ -26,6 +26,11 @@ namespace JKorTech.Extensive_Engineer_Report
             return GetAffectedParts().Count == 0;
         }
 
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.AnyHasModule<CompoundParts.CModuleStrut>();
+        }
+
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
             var struts = sectionParts.Where(part => part.FindModuleImplementing<CompoundParts.CModuleStrut>() != null)

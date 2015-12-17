@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
-    public class VabTwrAbove1 : SectionDesignConcernBase
+    public class VabTwrAbove1 : DesignConcernBase
     {
         public override string GetConcernDescription()
         {
@@ -21,14 +21,15 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
-        public override bool TestCondition(IEnumerable<Part> sectionParts)
+        public override bool TestCondition()
         {
-            var mass = sectionParts.Where(part => part.FindModuleImplementing<LaunchClamp>() == null).Sum(part => part.mass * 9.81);
-            var firstStage = sectionParts.Max(part => part.inverseStage);
-            var thrustByStage = sectionParts.GroupBy(part => part.inverseStage)
-                                                    .OrderByDescending(group => group.Key)
-                                                    .Select(group => group.SelectMany(part => part.FindModulesImplementing<ModuleEngines>())
-                                                                           .Select(engine => engine.GetMaxThrust()).Sum());
+            var mass = ShipSections.API.CurrentVesselParts.Where(part => part.FindModuleImplementing<LaunchClamp>() == null).Sum(part => part.mass * 9.81);
+            var firstStage = ShipSections.API.CurrentVesselParts.Max(part => part.inverseStage);
+            var thrustByStage = from part in ShipSections.API.CurrentVesselParts
+                                let partWithThrust = new { part, thrust = part.FindModuleImplementing<ModuleEngines>()?.GetMaxThrust() ?? 0.0f }
+                                group partWithThrust by partWithThrust.part.inverseStage into stage
+                                orderby stage descending
+                                select stage.Sum(val => val.thrust);
             var firstEngineStageThrust = thrustByStage.FirstOrDefault(stageThrust => stageThrust > .001);
             return firstEngineStageThrust > mass;
         }

@@ -21,12 +21,17 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.SelectMany(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>()).All(panel => panel.sunTracking);
+        }
+
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
             if (sectionParts.AnyHasModule<ModuleGenerator>()) return true;
             var solarPanels = sectionParts.SelectMany(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>());
-            if (solarPanels.Any(panel => !panel.sunTracking) || !solarPanels.Any()) return true;
-            return solarPanels.Any();
+            if (solarPanels.Any(panel => !panel.sunTracking)) return true;
+            return false;
         }
 
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)

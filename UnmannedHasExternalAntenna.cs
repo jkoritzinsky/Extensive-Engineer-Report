@@ -24,7 +24,7 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return CrewInSection(sectionParts).Any() || sectionParts.AnyHasModule<TagAntenna>();
+            return sectionParts.IsProbeControlled() || sectionParts.AnyHasModule<TagAntenna>();
         }
 
         protected internal override string Category => "Antenna";

@@ -5,9 +5,14 @@ namespace JKorTech.Extensive_Engineer_Report
 {
     public class WeaponManagerHasFlares : SectionDesignConcernBase
     {
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.AnyHasModule<TagWeaponsManager>();
+        }
+
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return !sectionParts.AnyHasModule<TagWeaponsManager>() || sectionParts.AnyHasModule<TagFlares>();
+            return sectionParts.AnyHasModule<TagFlares>();
         }
 
         protected internal override string Category => "Weaponry";

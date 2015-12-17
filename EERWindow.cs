@@ -82,7 +82,7 @@ namespace JKorTech.Extensive_Engineer_Report
             using (new GuiLayout(GuiLayout.Method.ScrollView, ref scrollPos))
             {
                 GUILayout.Label("Ship-Wide Tests");
-                foreach (var test in ConcernLoader.ShipDesignConcerns.Where(test => InCorrectFacility(test)))
+                foreach (var test in ConcernLoader.ShipDesignConcerns.Where(test => InCorrectFacility(test) && test.IsApplicable()))
                 {
                     using (new GuiLayout(GuiLayout.Method.Horizontal))
                     {
@@ -91,11 +91,11 @@ namespace JKorTech.Extensive_Engineer_Report
                     } 
                 }
                 GUILayout.Label("Section-Specific Tests");
-                foreach (var section in ShipSections.API.SectionNames)
+                foreach (var section in ShipSections.API.PartsBySection)
                 {
-                    var sectionData = ConcernRunner.Instance.SectionConcerns[section];
-                    GUILayout.Label(section);
-                    foreach (var test in ConcernLoader.SectionDesignConcerns.Where(test => InCorrectFacility(test)))
+                    var sectionData = ConcernRunner.Instance.SectionConcerns[section.Key];
+                    GUILayout.Label(section.Key);
+                    foreach (var test in ConcernLoader.SectionDesignConcerns.Where(test => InCorrectFacility(test) && test.IsApplicable(section)))
                     {
                         using (new GuiLayout(GuiLayout.Method.Horizontal))
                         {
@@ -106,9 +106,9 @@ namespace JKorTech.Extensive_Engineer_Report
                             else
                                 runNext = GUILayout.Toggle(run, test.GetConcernTitle(), passStyle);
                             if (!runNext)
-                                ConcernRunner.Instance.DisableTest(section, test);
+                                ConcernRunner.Instance.DisableTest(section.Key, test);
                             if (!run && runNext)
-                                ConcernRunner.Instance.EnableTest(section, test);
+                                ConcernRunner.Instance.EnableTest(section.Key, test);
                         }
                     }
                 }

@@ -6,6 +6,11 @@ namespace JKorTech.Extensive_Engineer_Report
 {
     public class WeaponsHaveManager : SectionDesignConcernBase
     {
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.AnyHasModule<TagWeapons>();
+        }
+
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
             return sectionParts.Where(part => part.HasModule<TagWeapons>()).ToList();
@@ -13,7 +18,7 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            return !sectionParts.AnyHasModule<TagWeapons>() || sectionParts.AnyHasModule<TagWeaponsManager>();
+            return sectionParts.AnyHasModule<TagWeaponsManager>();
         }
 
         protected internal override string Category => "Weaponry";

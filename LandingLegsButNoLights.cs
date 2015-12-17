@@ -20,12 +20,10 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.NOTICE;
         }
 
-        public override bool TestCondition(IEnumerable<Part> sectionParts)
-        {
-            var hasLights = sectionParts.AnyHasModule<ModuleLight>();
-            var hasLandingLegs = sectionParts.AnyHasModule<ModuleLandingLeg>() || sectionParts.AnyHasModule<ModuleLandingGear>()
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts) =>
+            sectionParts.AnyHasModule<ModuleLandingLeg>() || sectionParts.AnyHasModule<ModuleLandingGear>()
                                  || sectionParts.AnyHasModule<ModuleLandingGearFixed>();
-            return !hasLandingLegs || hasLights;
-        }
+
+        public override bool TestCondition(IEnumerable<Part> sectionParts) => sectionParts.AnyHasModule<ModuleLight>();
     }
 }

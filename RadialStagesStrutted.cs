@@ -24,6 +24,11 @@ namespace JKorTech.Extensive_Engineer_Report
 
         protected internal override string Category => "StockDrag";
 
+        protected internal override bool IsApplicable()
+        {
+            return ShipSections.API.CurrentVesselParts.Any(IsARadialDecoupler);
+        }
+
         public override bool TestCondition()
         {
             var radialDecouplers = EditorLogic.SortedShipList.Where(IsARadialDecoupler);
@@ -36,7 +41,7 @@ namespace JKorTech.Extensive_Engineer_Report
         private static bool IsARadialDecoupler(Part part)
         {
             return part.HasModule<ModuleAnchoredDecoupler>() ||
-                part?.FindModuleImplementing<ModuleDecouple>().explosiveNodeID == "srf";
+                part.FindModuleImplementing<ModuleDecouple>()?.explosiveNodeID == "srf";
         }
 
         private bool CheckForStrutsRoot(Part decoupler, IEnumerable<CompoundPart> struts)

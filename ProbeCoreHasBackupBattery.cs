@@ -21,9 +21,13 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
+        {
+            return sectionParts.IsProbeControlled();
+        }
+
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var manned = CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
             var backupBattery = sectionParts.Any(part =>
             {
                 var electricCharge = part.Resources["ElectricCharge"];
@@ -33,7 +37,7 @@ namespace JKorTech.Extensive_Engineer_Report
                 var flowDisabled = !electricCharge.flowState;
                 return isBattery && isNotCommandModule && flowDisabled;
             });
-            return manned || backupBattery;
+            return backupBattery;
         }
     }
 }

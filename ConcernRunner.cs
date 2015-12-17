@@ -87,13 +87,17 @@ namespace JKorTech.Extensive_Engineer_Report
                     SectionConcerns.Add(section, new Dictionary<SectionDesignConcernBase, bool>());
                 }
                 var data = ShipSections.API.GetSectionDataForMod<ConcernData>(section);
-                foreach (var concern in ConcernLoader.SectionDesignConcerns.Where(concern => !data.disabledConcerns.Contains(concern.GetConcernTitle())))
+                foreach (var concern in ConcernLoader.SectionDesignConcerns.Where(concern => !data.disabledConcerns.Contains(concern.GetType().Name)))
                 {
                     try
                     {
-                        SectionConcerns[section][concern] = concern.TestCondition(ShipSections.API.PartsBySection.First(group => group.Key == section));
-                        TestsPass &= SectionConcerns[section][concern];
-                        LogFormatted_DebugOnly($"Concern {concern.GetConcernTitle()} for section {section} returned {SectionConcerns[section][concern]}");
+                        var sectionParts = ShipSections.API.PartsBySection.First(group => group.Key == section);
+                        if (concern.IsApplicable(sectionParts))
+                        {
+                            SectionConcerns[section][concern] = concern.TestCondition();
+                            TestsPass &= SectionConcerns[section][concern];
+                            LogFormatted_DebugOnly($"Concern {concern.GetConcernTitle()} for section {section} returned {SectionConcerns[section][concern]}");
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -116,13 +120,13 @@ namespace JKorTech.Extensive_Engineer_Report
 
         internal void EnableTest(string section, SectionDesignConcernBase test)
         {
-            ShipSections.API.GetSectionDataForMod<ConcernData>(section).disabledConcerns.Remove(test.GetConcernTitle());
+            ShipSections.API.GetSectionDataForMod<ConcernData>(section).disabledConcerns.Remove(test.GetType().Name);
             RunTests();
         }
 
         internal void DisableTest(string section, SectionDesignConcernBase test)
         {
-            ShipSections.API.GetSectionDataForMod<ConcernData>(section).disabledConcerns.AddUnique(test.GetConcernTitle());
+            ShipSections.API.GetSectionDataForMod<ConcernData>(section).disabledConcerns.AddUnique(test.GetType().Name);
             SectionConcerns[section].Remove(test);
         }
     }

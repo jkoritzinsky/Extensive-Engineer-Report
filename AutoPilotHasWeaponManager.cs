@@ -5,8 +5,9 @@ namespace JKorTech.Extensive_Engineer_Report
 {
     public class AutoPilotHasWeaponManager : SectionDesignConcernBase
     {
-        public override bool TestCondition(IEnumerable<Part> sectionParts) =>
-            !sectionParts.AnyHasModule<TagAutopilot>() || sectionParts.AnyHasModule<TagWeaponsManager>();
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts) => sectionParts.AnyHasModule<TagAutopilot>();
+
+        public override bool TestCondition(IEnumerable<Part> sectionParts) => sectionParts.AnyHasModule<TagWeaponsManager>();
 
         protected internal override string Category => "Weaponry";
 

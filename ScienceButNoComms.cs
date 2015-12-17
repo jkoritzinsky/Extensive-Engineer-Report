@@ -1,6 +1,7 @@
 ﻿using PreFlightTests;
 using System.Collections.Generic;
 using System.Linq;
+using static JKorTech.Extensive_Engineer_Report.KSPExtensions;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -21,12 +22,13 @@ namespace JKorTech.Extensive_Engineer_Report
             return DesignConcernSeverity.WARNING;
         }
 
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts) =>
+            sectionParts.AnyHasModule<ModuleScienceExperiment>() && sectionParts.IsProbeControlled();
+
         public override bool TestCondition(IEnumerable<Part> sectionParts)
         {
-            var anyCrew = CrewInSection(sectionParts).Any();
             var hasAnyComms = sectionParts.AnyHasModule<ModuleDataTransmitter>();
-            var hasScienceModules = sectionParts.AnyHasModule<ModuleScienceExperiment>();
-            return !hasScienceModules || anyCrew || hasAnyComms;
+            return hasAnyComms;
         }
 
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)

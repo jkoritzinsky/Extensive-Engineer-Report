@@ -1,6 +1,7 @@
 ﻿using PreFlightTests;
 using System.Collections.Generic;
 using System.Linq;
+using static JKorTech.Extensive_Engineer_Report.KSPExtensions;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -23,14 +24,13 @@ namespace JKorTech.Extensive_Engineer_Report
 
         public override List<Part> GetAffectedParts(IEnumerable<Part> sectionParts)
         {
-            return sectionParts.Where(part => part.HasModule<ModuleScienceConverter>() && part.HasModule<ModuleScienceLab>()).ToList();
+            return sectionParts.Where(part => part.HasModule<ModuleScienceConverter>() || part.HasModule<ModuleScienceLab>()).ToList();
         }
 
-        public override bool TestCondition(IEnumerable<Part> sectionParts)
-        {
-            var hasLab = sectionParts.AnyHasModule<ModuleScienceConverter>() && sectionParts.AnyHasModule<ModuleScienceLab>();
-            var hasScientist = CrewInSection(sectionParts).Keys.Any(crew => crew.experienceTrait.TypeName == "Scientist");
-            return !hasLab || hasScientist;
-        }
+        protected internal override bool IsApplicable(IEnumerable<Part> sectionParts) =>
+            sectionParts.AnyHasModule<ModuleScienceConverter>() || sectionParts.AnyHasModule<ModuleScienceLab>();
+
+        public override bool TestCondition(IEnumerable<Part> sectionParts) =>
+            CrewInSection(sectionParts).Keys.Any(crew => crew.experienceTrait.TypeName == "Scientist");
     }
 }
