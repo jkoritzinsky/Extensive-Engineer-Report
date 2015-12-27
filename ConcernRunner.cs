@@ -13,10 +13,17 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             GameEvents.onEditorShipModified.Add(ShipModified);
             GameEvents.onEditorLoad.Add(OnLoad);
+            GameEvents.onEditorShowPartList.Add(RunTests);
             ShipSections.API.PartSectionInitialized.Add(SectionInitialized);
             ShipSections.API.SectionRenamed.Add(SectionRenamed);
             ShipSections.API.SectionsMerged.Add(SectionsMerged);
+            ShipSections.API.NewSectionCreated.Add(NewSection);
             Instance = this;
+        }
+
+        private void NewSection(string data)
+        {
+            RunTests();
         }
 
         private void SectionsMerged(string data0, string data1)
@@ -115,6 +122,10 @@ namespace JKorTech.Extensive_Engineer_Report
             GameEvents.onEditorShipModified.Remove(ShipModified);
             GameEvents.onEditorLoad.Remove(OnLoad);
             ShipSections.API.PartSectionInitialized.Remove(SectionInitialized);
+            ShipSections.API.SectionRenamed.Remove(SectionRenamed);
+            ShipSections.API.SectionsMerged.Remove(SectionsMerged);
+            ShipSections.API.NewSectionCreated.Remove(NewSection);
+            GameEvents.onEditorShowPartList.Remove(RunTests);
             Instance = null;
         }
 
