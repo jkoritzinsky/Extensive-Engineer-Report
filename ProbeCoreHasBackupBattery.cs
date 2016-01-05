@@ -8,7 +8,7 @@ namespace JKorTech.Extensive_Engineer_Report
     {
         public override string GetConcernDescription()
         {
-            return "This probe lacks a backup battery with ElectricCharge flow disabled.  Without careful attention, it might run out of power. Note: This warning will not disappear after fixing until a part is added or removed.";
+            return "This probe lacks a backup battery with ElectricCharge flow disabled.  Without careful attention, it might run out of power.";
         }
 
         public override string GetConcernTitle()
