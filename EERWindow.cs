@@ -79,16 +79,20 @@ namespace JKorTech.Extensive_Engineer_Report
             var failStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
             failStyle.onNormal = failStyle.hover;
             failStyle.onNormal.textColor = Color.red;
+            var descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label);
+            descriptionStyle.wordWrap = true;
+            descriptionStyle.normal.textColor = Color.red;
             using (new GuiLayout(GuiLayout.Method.ScrollView, ref scrollPos))
             {
                 GUILayout.Label("Ship-Wide Tests");
                 foreach (var test in ConcernLoader.ShipDesignConcerns.Where(test => InCorrectFacility(test) && test.IsApplicable()))
                 {
-                    using (new GuiLayout(GuiLayout.Method.Horizontal))
+                    var passed = ConcernRunner.Instance.ShipConcerns[test];
+                    GUILayout.Toggle(true, test.GetConcernTitle(), passed ? passStyle : failStyle);
+                    if (!passed)
                     {
-                        var passed = ConcernRunner.Instance.ShipConcerns[test];
-                        GUILayout.Toggle(true, test.GetConcernTitle(), passed ? passStyle : failStyle);
-                    } 
+                        GUILayout.Label(test.GetConcernDescription(), descriptionStyle);
+                    }
                 }
                 GUILayout.Label("Section-Specific Tests");
                 foreach (var section in ShipSections.API.PartsBySection)
@@ -97,19 +101,22 @@ namespace JKorTech.Extensive_Engineer_Report
                     GUILayout.Label(section.Key);
                     foreach (var test in ConcernLoader.SectionDesignConcerns.Where(test => InCorrectFacility(test) && test.IsApplicable(section)))
                     {
-                        using (new GuiLayout(GuiLayout.Method.Horizontal))
+                        var run = sectionData.ContainsKey(test);
+                        bool runNext;
+                        if (run)
                         {
-                            var run = sectionData.ContainsKey(test);
-                            bool runNext;
-                            if (run)
-                                runNext = GUILayout.Toggle(run, test.GetConcernTitle(), sectionData[test] ? passStyle : failStyle);
-                            else
-                                runNext = GUILayout.Toggle(run, test.GetConcernTitle(), passStyle);
-                            if (!runNext)
-                                ConcernRunner.Instance.DisableTest(section.Key, test);
-                            if (!run && runNext)
-                                ConcernRunner.Instance.EnableTest(section.Key, test);
+                            runNext = GUILayout.Toggle(run, test.GetConcernTitle(), sectionData[test] ? passStyle : failStyle);
+                            if (!sectionData[test])
+                            {
+                                GUILayout.Label(test.GetConcernDescription(), descriptionStyle);
+                            }
                         }
+                        else
+                            runNext = GUILayout.Toggle(run, test.GetConcernTitle(), passStyle);
+                        if (!runNext)
+                            ConcernRunner.Instance.DisableTest(section.Key, test);
+                        if (!run && runNext)
+                            ConcernRunner.Instance.EnableTest(section.Key, test);
                     }
                 }
             }
