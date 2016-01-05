@@ -24,7 +24,7 @@ namespace JKorTech.Extensive_Engineer_Report
         protected internal override bool IsApplicable(IEnumerable<Part> sectionParts)
         {
             return sectionParts.SelectMany(part => part.FindModulesImplementing<ModuleDeployableSolarPanel>()).All(panel => panel.sunTracking)
-                 || !sectionParts.AnyHasModule<ModuleDeployableSolarPanel>();
+                 && sectionParts.AnyHasModule<ModuleDeployableSolarPanel>();
         }
 
         public override bool TestCondition(IEnumerable<Part> sectionParts)
