@@ -19,9 +19,23 @@ namespace JKorTech.Extensive_Engineer_Report
         private Texture TestsPassingIcon;
         private Texture TestsFailIcon;
         private static readonly string TestsFailIconLocation = "ExtensiveEngineerReport/TestFail";
+        private GUIStyle passStyle;
+        private GUIStyle failStyle;
+        private GUIStyle descriptionStyle;
         
         internal override void Start()
         {
+            passStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
+            passStyle.onNormal.textColor = XKCDColors.AlgaeGreen;
+            passStyle.hover = passStyle.onHover;
+            failStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
+            failStyle.onNormal = failStyle.hover;
+            failStyle.onNormal.textColor = Color.red;
+            descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label)
+            {
+                wordWrap = true
+            };
+            descriptionStyle.normal.textColor = Color.red;
             DragEnabled = true;
             WindowRect.Set((Screen.width - WindowWidth) / 4, (Screen.height - WindowHeight) / 2, WindowWidth, WindowHeight);
             TestsPassingIcon = GameDatabase.Instance.GetTexture(TestsPassingIconLocation, false);
@@ -74,15 +88,6 @@ namespace JKorTech.Extensive_Engineer_Report
 
         internal override void DrawWindow(int id)
         {
-            var passStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
-            passStyle.onNormal.textColor = XKCDColors.AlgaeGreen;
-            passStyle.hover = passStyle.onHover;
-            var failStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
-            failStyle.onNormal = failStyle.hover;
-            failStyle.onNormal.textColor = Color.red;
-            var descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label);
-            descriptionStyle.wordWrap = true;
-            descriptionStyle.normal.textColor = Color.red;
             using (new GuiLayout(GuiLayout.Method.Horizontal))
             {
                 var settings = GetScenarioModules<GeneralSettings>().First();
