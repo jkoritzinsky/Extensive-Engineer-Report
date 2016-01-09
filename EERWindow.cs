@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using static JKorTech.Extensive_Engineer_Report.ConcernUtils;
+using static JKorTech.Extensive_Engineer_Report.KSPExtensions;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -82,6 +83,20 @@ namespace JKorTech.Extensive_Engineer_Report
             var descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label);
             descriptionStyle.wordWrap = true;
             descriptionStyle.normal.textColor = Color.red;
+            using (new GuiLayout(GuiLayout.Method.Horizontal))
+            {
+                var settings = GetScenarioModules<GeneralSettings>().First();
+                GUILayout.Label("Enabled Test Severity");
+                var old = settings.critical;
+                settings.critical = GUILayout.Toggle(settings.critical, "Critical", KSPPluginFramework.SkinsLibrary.CurrentSkin.button);
+                if (old != settings.critical) ConcernRunner.Instance.RunTests();
+                old = settings.warning;
+                settings.warning = GUILayout.Toggle(settings.warning, "Warning", KSPPluginFramework.SkinsLibrary.CurrentSkin.button);
+                if (old != settings.warning) ConcernRunner.Instance.RunTests();
+                old = settings.notice;
+                settings.notice = GUILayout.Toggle(settings.notice, "Notice", KSPPluginFramework.SkinsLibrary.CurrentSkin.button);
+                if (old != settings.notice) ConcernRunner.Instance.RunTests();
+            }
             using (new GuiLayout(GuiLayout.Method.ScrollView, ref scrollPos))
             {
                 GUILayout.Label("Ship-Wide Tests");

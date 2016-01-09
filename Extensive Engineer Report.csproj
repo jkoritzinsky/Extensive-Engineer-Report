@@ -59,6 +59,7 @@
     <Compile Include="DesignConcernBase.cs" />
     <Compile Include="EERWindow.cs" />
     <Compile Include="FlowControlEventHack.cs" />
+    <Compile Include="GeneralSettings.cs" />
     <Compile Include="GuiLayout.cs" />
     <Compile Include="HasControlSurfaces.cs" />
     <Compile Include="HasSASModuleOrPilot.cs" />

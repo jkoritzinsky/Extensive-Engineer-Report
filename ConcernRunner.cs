@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static JKorTech.Extensive_Engineer_Report.KSPExtensions;
 
 namespace JKorTech.Extensive_Engineer_Report
 {
@@ -62,7 +63,7 @@ namespace JKorTech.Extensive_Engineer_Report
         internal Dictionary<string, Dictionary<SectionDesignConcernBase, bool>> SectionConcerns = new Dictionary<string, Dictionary<SectionDesignConcernBase, bool>>();
         public bool TestsPass { get; private set; }
 
-        private void RunTests()
+        internal void RunTests()
         {
             LogFormatted("Run Tests");
             TestsPass = true;
@@ -73,8 +74,11 @@ namespace JKorTech.Extensive_Engineer_Report
                 try
                 {
                     ShipConcerns[concern] = concern.Test();
+                    if (GetScenarioModules<GeneralSettings>().First().ShouldRun(concern.GetSeverity()))
+                    {
+                        TestsPass &= ShipConcerns[concern];
+                    }
                     LogFormatted_DebugOnly($"Concern {concern.GetConcernTitle()} returned {ShipConcerns[concern]}");
-                    TestsPass &= ShipConcerns[concern];
                 }
                 catch (Exception ex)
                 {
@@ -102,7 +106,10 @@ namespace JKorTech.Extensive_Engineer_Report
                         if (concern.IsApplicable(sectionParts))
                         {
                             SectionConcerns[section][concern] = concern.TestCondition();
-                            TestsPass &= SectionConcerns[section][concern];
+                            if (GetScenarioModules<GeneralSettings>().First().ShouldRun(concern.GetSeverity()))
+                            {
+                                TestsPass &= SectionConcerns[section][concern]; 
+                            }
                             LogFormatted_DebugOnly($"Concern {concern.GetConcernTitle()} for section {section} returned {SectionConcerns[section][concern]}");
                         }
                     }

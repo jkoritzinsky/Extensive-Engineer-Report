@@ -38,5 +38,11 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             return sectionParts.AnyHasModule<ModuleCommand>() && !CrewInSection(sectionParts).Any(pair => pair.Value.HasModule<ModuleCommand>());
         }
+
+        public static IEnumerable<T> GetScenarioModules<T>()
+            where T : ScenarioModule
+        {
+            return ScenarioRunner.GetLoadedModules().OfType<T>();
+        }
     }
 }
