@@ -15,10 +15,10 @@ namespace JKorTech.Extensive_Engineer_Report
         private const int WindowWidth = 400, WindowHeight = 600;
         private ApplicationLauncherButton button;
         private Vector2 scrollPos;
-        private static readonly string TestsPassingIconLocation = "ExtensiveEngineerReport/TestPass";
+        private static readonly string TestsPassingIconLocation = "Extensive Engineer Report/TestPass";
         private Texture TestsPassingIcon;
         private Texture TestsFailIcon;
-        private static readonly string TestsFailIconLocation = "ExtensiveEngineerReport/TestFail";
+        private static readonly string TestsFailIconLocation = "Extensive Engineer Report/TestFail";
         private GUIStyle passStyle;
         private GUIStyle failStyle;
         private GUIStyle descriptionStyle;
