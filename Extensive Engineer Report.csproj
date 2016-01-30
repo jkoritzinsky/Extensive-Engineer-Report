@@ -56,6 +56,7 @@
     <Compile Include="ConcernLoader.cs" />
     <Compile Include="ConcernRunner.cs" />
     <Compile Include="ConcernUtils.cs" />
+    <Compile Include="CrewPanelMonitor.cs" />
     <Compile Include="DesignConcernBase.cs" />
     <Compile Include="EERWindow.cs" />
     <Compile Include="FlowControlEventHack.cs" />

@@ -15,6 +15,7 @@ namespace JKorTech.Extensive_Engineer_Report
             GameEvents.onEditorShipModified.Add(ShipModified);
             GameEvents.onEditorLoad.Add(OnLoad);
             GameEvents.onEditorShowPartList.Add(RunTests);
+            CrewPanelMonitor.CrewChanged += RunTests;
             ShipSections.API.PartSectionInitialized.Add(SectionInitialized);
             ShipSections.API.SectionRenamed.Add(SectionRenamed);
             ShipSections.API.SectionsMerged.Add(SectionsMerged);
@@ -128,6 +129,7 @@ namespace JKorTech.Extensive_Engineer_Report
             base.OnDestroy();
             GameEvents.onEditorShipModified.Remove(ShipModified);
             GameEvents.onEditorLoad.Remove(OnLoad);
+            CrewPanelMonitor.CrewChanged -= RunTests;
             ShipSections.API.PartSectionInitialized.Remove(SectionInitialized);
             ShipSections.API.SectionRenamed.Remove(SectionRenamed);
             ShipSections.API.SectionsMerged.Remove(SectionsMerged);
@@ -146,6 +148,7 @@ namespace JKorTech.Extensive_Engineer_Report
         {
             ShipSections.API.GetSectionDataForMod<ConcernData>(section).disabledConcerns.AddUnique(test.GetType().Name);
             SectionConcerns[section].Remove(test);
+            RunTests();
         }
     }
 }

@@ -15,29 +15,20 @@ namespace JKorTech.Extensive_Engineer_Report
         private const int WindowWidth = 400, WindowHeight = 600;
         private ApplicationLauncherButton button;
         private Vector2 scrollPos;
-        private static readonly string TestsPassingIconLocation = "Extensive Engineer Report/TestPass";
+        private static readonly string TestsPassingIconLocation = "ExtensiveEngineerReport/TestPass";
         private Texture TestsPassingIcon;
         private Texture TestsFailIcon;
-        private static readonly string TestsFailIconLocation = "Extensive Engineer Report/TestFail";
+        private static readonly string TestsFailIconLocation = "ExtensiveEngineerReport/TestFail";
         private GUIStyle passStyle;
         private GUIStyle failStyle;
         private GUIStyle descriptionStyle;
+        private bool stylesInit;
         
         internal override void Start()
         {
-            passStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
-            passStyle.onNormal.textColor = XKCDColors.AlgaeGreen;
-            passStyle.hover = passStyle.onHover;
-            failStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
-            failStyle.onNormal = failStyle.hover;
-            failStyle.onNormal.textColor = Color.red;
-            descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label)
-            {
-                wordWrap = true
-            };
-            descriptionStyle.normal.textColor = Color.red;
             DragEnabled = true;
             WindowRect.Set((Screen.width - WindowWidth) / 4, (Screen.height - WindowHeight) / 2, WindowWidth, WindowHeight);
+            LogFormatted_DebugOnly("Setting textures");
             TestsPassingIcon = GameDatabase.Instance.GetTexture(TestsPassingIconLocation, false);
             TestsFailIcon = GameDatabase.Instance.GetTexture(TestsFailIconLocation, false);
             WindowCaption = "Extensive Engineer Report";
@@ -88,6 +79,11 @@ namespace JKorTech.Extensive_Engineer_Report
 
         internal override void DrawWindow(int id)
         {
+            if (!stylesInit)
+            {
+                InitStyles();
+                stylesInit = true;
+            }
             using (new GuiLayout(GuiLayout.Method.Horizontal))
             {
                 var settings = GetScenarioModules<GeneralSettings>().First();
@@ -140,6 +136,24 @@ namespace JKorTech.Extensive_Engineer_Report
                     }
                 }
             }
+        }
+
+        private void InitStyles()
+        {
+            passStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
+            passStyle.onNormal.textColor = XKCDColors.AlgaeGreen;
+            passStyle.hover = passStyle.onHover;
+            LogFormatted_DebugOnly("Created pass style");
+            failStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.toggle);
+            failStyle.onNormal = failStyle.hover;
+            failStyle.onNormal.textColor = Color.red;
+            LogFormatted_DebugOnly("Created fail style");
+            descriptionStyle = new GUIStyle(KSPPluginFramework.SkinsLibrary.CurrentSkin.label)
+            {
+                wordWrap = true
+            };
+            descriptionStyle.normal.textColor = Color.red;
+            LogFormatted_DebugOnly("Created description style");
         }
     }
 }
