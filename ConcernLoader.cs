@@ -60,15 +60,23 @@ namespace JKorTech.Extensive_Engineer_Report
             foreach (var assembly in AssemblyLoader.loadedAssemblies)
             {
                 if (Equals(assembly, typeof(PreFlightCheck).Assembly)) continue; //Skip types in the stock assembly
-                foreach (var type in assembly.assembly.GetTypes())
+                try
                 {
-                    if (!type.IsAbstract && typeof(TBase).IsAssignableFrom(type))
+                    foreach (var type in assembly.assembly.GetTypes())
                     {
-                        Debug.Log("[Extensive Engineer Report] Found item: " + type.Name);
-                        var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
-                        if (defaultConstructor != null) instances.Add((TBase)type.GetConstructor(Type.EmptyTypes).Invoke(null));
-                        else Debug.Log("[Extensive Engineer Report] Item " + type.Name + " does not have a default constructor");
+                        if (!type.IsAbstract && typeof(TBase).IsAssignableFrom(type))
+                        {
+                            Debug.Log("[Extensive Engineer Report] Found item: " + type.Name);
+                            var defaultConstructor = type.GetConstructor(Type.EmptyTypes);
+                            if (defaultConstructor != null) instances.Add((TBase)type.GetConstructor(Type.EmptyTypes).Invoke(null));
+                            else Debug.Log("[Extensive Engineer Report] Item " + type.Name + " does not have a default constructor");
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Debug.Log("[Extensive Engineer Report] Assembly failed to load.  The exception is below.");
+                    Debug.LogException(ex);
                 }
             }
             return instances;
