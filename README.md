@@ -4,6 +4,7 @@ This mod is available on CKAN or on the releases page on Github (https://github.
 ## Dependencies
 * ShipSections v1.1
 * ModuleManager
+
 ## Special Features (v0.5)
 ### Launch Button Color
 If any checked tests (applicable and severity enabled) fail, the launch button will turn red.  It will still work, but it should catch your eye and get you to check your tests.
@@ -81,11 +82,12 @@ Tests only show up if they are considered applicable (required mods installed, h
 
 # Changelog
 
-## Changed in v0.5
+## Changes in v0.5
 * Added a UI.
 * Depends on ShipSections and MM
 * Section tests can be toggled on and off.
 * Visible (but not intrusive) warning before launch.
+
 ## Bug Fixes in v0.4
 TWR no longer warns when TWR is actually > 1
 Pre flight warning only warns about tests that apply to the current building
